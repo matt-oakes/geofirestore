@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase-admin';
 
 import { GeoFirestore } from './geofirestore';
 import { GeoCallbackRegistration } from './callbackRegistration';
@@ -34,7 +34,7 @@ export class GeoFirestoreQuery {
    * @param _collectionRef A Firestore Collection reference where the GeoFirestore data will be stored.
    * @param queryCriteria The criteria which specifies the query's center and radius.
    */
-  constructor(private _collectionRef: firebase.firestore.CollectionReference, queryCriteria: QueryCriteria) {
+  constructor(private _collectionRef: any, queryCriteria: QueryCriteria) {
     // Firebase reference of the GeoFirestore which created this query
     if (Object.prototype.toString.call(this._collectionRef) !== '[object Object]') {
       throw new Error('firebaseRef must be an instance of Firestore');
@@ -415,8 +415,14 @@ export class GeoFirestoreQuery {
       const firestoreQuery: firebase.firestore.Query = this._collectionRef.orderBy('g').startAt(query[0]).endAt(query[1]);
 
       // For every new matching geohash, determine if we should fire the 'key_entered' event
-      const childCallback = firestoreQuery.onSnapshot((snapshot: firebase.firestore.QuerySnapshot) => {
-        snapshot.docChanges().forEach((change: firebase.firestore.DocumentChange) => {
+      const childCallback = firestoreQuery.onSnapshot((snapshot: any) => {
+        let docChanges;
+        if (typeof snapshot.docChanges === "function") {
+          docChanges = snapshot.docChanges()
+        } else {
+          docChanges = snapshot.docChanges
+        }
+        docChanges.forEach((change: any) => {
           if (change.type === 'added') {
             this._childAddedCallback(change.doc);
           }

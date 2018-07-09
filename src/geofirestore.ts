@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from 'firebase-admin';
 
 import { GeoFirestoreQuery } from './query';
 import { decodeGeoFirestoreObject, degreesToRadians, encodeGeoFireObject, encodeGeohash, validateLocation, validateKey, findCoordinatesKey } from './utils';
@@ -12,7 +12,7 @@ export class GeoFirestore {
   /**
    * @param _collectionRef A Firestore Collection reference where the GeoFirestore data will be stored.
    */
-  constructor(private _collectionRef: firebase.firestore.CollectionReference) {
+  constructor(private _collectionRef: any) {
     if (Object.prototype.toString.call(this._collectionRef) !== '[object Object]') {
       throw new Error('collectionRef must be an instance of a Firestore Collection');
     }
@@ -64,7 +64,7 @@ export class GeoFirestore {
    *
    * @returns The Firestore Collection used to create this GeoFirestore instance.
    */
-  public ref(): firebase.firestore.CollectionReference {
+  public ref(): any {
     return this._collectionRef;
   }
 
@@ -116,7 +116,7 @@ export class GeoFirestore {
       throw new Error('keyOrDocuments must be a string or a mapping of key - document pairs.');
     }
 
-    const batch: firebase.firestore.WriteBatch = this._collectionRef.firestore.batch();
+    const batch = this._collectionRef.firestore.batch();
     Object.keys(keyOrDocuments).forEach((key) => {
       validateKey(key);
       const ref = this._collectionRef.doc(key);

@@ -1,7 +1,7 @@
 {
-  "name": "geofirestore",
+  "name": "@mattoakes/geofirestore",
   "description": "Location-based querying and filtering using Firebase's Firestore",
-  "version": "2.0.0-2",
+  "version": "2.0.0-3",
   "author": "Michael Solati mkslt04@gmail.com",
   "homepage": "https://github.com/MichaelSolati/geofirestore/",
   "repository": {
@@ -30,14 +30,14 @@
     "package.json"
   ],
   "peerDependencies": {
-    "firebase": "5.x.x"
+    "firebase-admin": "5.x.x"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
     "@types/mocha": "^5.2.0",
     "@types/node": "^10.1.2",
     "chai": "^4.1.2",
-    "firebase": "5.x.x",
+    "firebase-admin": "5.x.x",
     "generate-changelog": "^1.7.1",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
